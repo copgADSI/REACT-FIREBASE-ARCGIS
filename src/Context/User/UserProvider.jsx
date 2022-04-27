@@ -5,14 +5,12 @@ import {
   updateProfile
 } from 'firebase/auth'
 import React, { createContext, useEffect, useState } from 'react'
-import useCustomizedSnackbars from '../../Components/CustomSnackbars/Hooks/useCustomizedSnackbars'
 import { auth } from '../../Firebase/Firebase.config'
 export const UserContext = createContext()
 const UserProvider = ({ children }) => {
 
   const [user, setUser] = useState(false)
-  const action = useCustomizedSnackbars()
-
+  
   useEffect(() => {
     const unsusbribe = onAuthStateChanged(auth, (user_) => {
       if (user_) {
@@ -58,14 +56,6 @@ const UserProvider = ({ children }) => {
       phoneNumber: user_information.phone,
       password: user_information.password
     }).then(() => {
-
-      action.setAlert(
-        { ...action.alert, 
-          [action.alert.open]: true,
-          [action.alert.message]: `Usuario actualizado con éxito!`,
-          [action.alert.severity]: `success`,
-        }
-      )
     }).catch((error) => {
       console.log(error)
     })
